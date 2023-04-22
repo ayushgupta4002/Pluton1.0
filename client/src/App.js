@@ -7,21 +7,26 @@ function App() {
   const baseurl="http://localhost:5000/chat";
   const [prompt, setprompt] = useState("")
   const [answer, setanswer] = useState("")
+  const [execTime,setexecTime]=useState("")
 
 
   const chat=()=>{
     console.log(prompt);
+    const start = Date.now();
     axios.post(baseurl, {
      
         prompt: prompt
     }).then((Response)=>{
         if (Response.status=200){
-          console.log(Response)
-          
-
+ 
        console.log("success");
         }
         console.log(Response.data)
+        
+       const end = Date.now();
+       console.log(`Execution time: ${end - start} ms`);
+       setexecTime(end-start);
+       
         setanswer(Response.data)
         
     })
@@ -42,6 +47,7 @@ function App() {
                         <button class="bg-[#002D74] text-white w-[95%] mt-3 p-2  rounded-2xl" onClick={chat}>Submit</button>
                         
                         <p>this is my answer : {answer}</p>
+                        <p>execution time is {execTime} ms</p>
                         </div>
                             
 
